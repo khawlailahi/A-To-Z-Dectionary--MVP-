@@ -1,63 +1,60 @@
 var express = require('express');
-var bodyParser = require('body-parser');
-var DB = require('../database-mongo');
-var API = require('./APIKey.js')
 var app = express();
+var request = require('request');
+const bodyparser = require('body-parser')
 
-app.use(express.static(__dirname + '/../react-client/dist'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+//Free API Key For Dictionary
+var DIC_API_KEY = "701f2477-5eb3-4ea1-a7ba-f1d06b2512b9"
 
-var word;
 
-app.post("/search", (req, res) => {
-  word = req.body.word;
+//Fetching and transforming data to object according to our needs
 
-  API.fetchData(word, (data) => {
-    if (data) {
-      var APIData = data;
-      DB.save(APIData, (err, data) => {
-        if (data) {
-          res.end();
-        }
-      });
-    }
-  })
-})
-
-app.get('/search', function(req, res) {
-  API.fetchData(word, (data) => {
-    if (data === "error") {
-      res.end("NOT Found")
-    }
-    if (data) {
-      var APIData = data;
-      res.send(data)
-      res.end();
-    }
-
-  });
-})
-app.get('/history', function(req, res) {
-  console.log("received")
-  var dataArr = []
-  DB.Word.find({}, (err, data) => {
-    console.log("dataaa from db ", data)
-    for (var i = 0; i < data.length; i++) {
-      var data1 = {
-        word: data[i]._doc.word
+function fetchData(word, callback) {
+  request.get(`https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/${word}?key=${DIC_API_KEY}`, function (err, res, body) {
+    if (err)
+      console.log("err from fetching data", err)
+    if (res.statusCode === 200) {
+      console.log("APIDATA", JSON.parse(body))
+      var bod = JSON.parse(body)
+      if (bod.length === 0 || typeof bod[0] === "string") {
+        callback("error", null)
+        return;
       }
-      dataArr.push(data1)
+      else {
+        var data = {
+          word: word,
+          type: bod[0].fl,
+          definition: bod[0].shortdef[0],
+          syns: "Not Found",
+          ant: "Not Found"
+        }
+        if (bod[0].meta.syns.length) {
+          if (bod[0].meta.syns[0].length) {
+            var syns = ''
+            for (var i = 0; i < bod[0].meta.syns[0].length; i++) {
+              if (bod[0].meta.syns[0][i]) {
+                syns += bod[0].meta.syns[0][i] + "  , ";
+              }
+            }
+            data.syns = syns.slice(0, syns.length - 2);
+          }
+        }
+        if (bod[0].meta.ants.length) {
+          if (bod[0].meta.ants[0].length) {
+            var ants = ''
+            for (var i = 0; i < bod[0].meta.ants[0].length; i++) {
+              ants += bod[0].meta.ants[0][i] + " , ";
+            } if (bod[0].meta.ants[0][i]) {
+
+            }
+            data.ant = ants.slice(0, ants.length - 2);
+          }
+        }
+        callback(null, data)
+      }
     }
-    res.send(dataArr)
-    res.end();
+  });
 
-  })
-
-});
-
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
-});
+}
+module.exports.fetchData = fetchData
+module.exports.fetchData = fetchData;

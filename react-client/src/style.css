@@ -1,0 +1,39 @@
+
+#title{
+  color: hotPink;
+  text-align: center;
+}
+#slogan{
+  color: lightGray;
+  text-align: center;
+}
+#input{
+   max-width: 400px;
+   border: black solid 3px ;
+}
+#search{
+    font-weight: bold;
+    background-color: lightslategray;
+    color: white;
+}
+#history{
+  font-weight: bold;
+  background-color: lightslategray;
+  color: white;
+}
+#word{
+  font-weight: bold;
+  background-color: lightslategray;
+  color: white;
+}
+.subtitles{
+  color : hotPink;
+}
+.container{
+  color: white;
+  font-size: 20px;
+  background-color: #3a4d74;
+  width: 600px;
+  text-align: center;
+  font-family: sans-serif;
+}

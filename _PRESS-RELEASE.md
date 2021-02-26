@@ -35,11 +35,8 @@ Once the project moves into development, the press release can be used as a touc
   > Never miss a chance to enrich your knowlegde and widen vocabulary.
 
 ## How to Get Started ##
-  > After downloading or cloning this repositorie , open it a Code Editor. 
-  > In Root Directory : npm install 
-  > In the server directory : cd react-client   run the commande  npm run react-dev .
-  > In the server directory : cd server  run the commande node index.js .
-  
+  > Prepare the react components, start the server , connect with database , try with dummy data , use API , try again, add other features.
+
 ## Customer Quote ##
   > easy to use and efficient dectionary .
 
