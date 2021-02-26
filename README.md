@@ -10,10 +10,10 @@
 You are one click away from knowlegde. This project is an easy to use dictionary, 
 that makes understanding English easy by deliever word definitions for you with a click of a button.
 
-<img src= "images/home.jpeg" width = "1000">
-<img src= "images/search.jpeg" width = "1000">
-<img src= "images/history.jpeg" width = "1000">
-<img src= "images/notfound.jpeg" width = "1000">
+<img src= "images/home.jpeg" width = "1000" height ="300">
+<img src= "images/search.jpeg" width = "1000" height ="300">
+<img src= "images/history.jpeg" width = "1000" height ="300">
+<img src= "images/notfound.jpeg" width = "1000" height ="300">
 ## Problem
 Sometimes, we have trouble understanding english word and we'r too lazy to search for it. so we miss the chance to learn.
 
